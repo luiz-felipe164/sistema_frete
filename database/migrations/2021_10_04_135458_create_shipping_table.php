@@ -13,7 +13,7 @@ class CreateShippingTable extends Migration
      */
     public function up()
     {
-        Schema::create('shipping', function (Blueprint $table) {
+        Schema::create('shippings', function (Blueprint $table) {
             $table->id();
             $table->string('board', 8);
             $table->string('vehicle_owner');
