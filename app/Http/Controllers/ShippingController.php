@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\ShippingService;
+use Illuminate\Http\JsonResponse;
+use App\Http\Requests\ShippingRequest;
 
 class ShippingController extends Controller
 {
@@ -18,9 +20,21 @@ class ShippingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        
+        try {
+
+            $shippings = $this->service->getAll();
+    
+            return $this->response($shippings);
+
+        } catch (\Exception $e) {
+            $data = [
+                'message' => 'An error occurred, please contact our support', 
+                'code' => $e->getCode() 
+            ];
+            return $this->response($data, 500);
+        }
     }
 
     /**
@@ -29,9 +43,9 @@ class ShippingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ShippingRequest $request)
     {
-        //
+        $inputs = $request->validated();
     }
 
     /**
