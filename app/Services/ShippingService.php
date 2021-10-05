@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Services;
+
+use App\Repository\ShippingRepositoryInterface;
+use Illuminate\Support\Collection;
+
+class ShippingService {
+
+    protected $shippingRepository;
+
+    public function __construct(ShippingRepositoryInterface $shippingRepository)
+    {
+        $this->shippingRepository = $shippingRepository;
+    }
+
+    public function getAll(): Collection
+    {
+        return $this->shippingRepository->all();
+    }
+}
