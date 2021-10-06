@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\ShippingService;
 use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ShippingRequest;
+use Facade\FlareClient\Http\Exceptions\NotFound;
 
 class ShippingController extends Controller
 {
@@ -36,7 +37,7 @@ class ShippingController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\ShippingRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function store(ShippingRequest $request)
@@ -47,7 +48,7 @@ class ShippingController extends Controller
             $shipping = $this->service->create($inputs);
 
             if ($shipping) {
-                return $this->response($shipping, 201);
+                return $this->response('Registro criado com sucesso', 201);
             }
 
             return $this->responseError(500, 'Ocorreu um erro ao tentar criar o frete.');
@@ -73,13 +74,28 @@ class ShippingController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\ShippingRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ShippingRequest $request, $id)
     {
-        //
+        try {
+            $inputs = $request->validated();
+
+            $shipping = $this->service->update($inputs, $id);
+
+            if ($shipping) {
+                return $this->response('Registro atualizado com sucesso', 200);
+            }
+
+            return $this->responseError(500, 'Ocorreu um erro ao tentar criar o frete.');
+
+        } catch (NotFound $e) {
+            return $this->response(['message' => $e->getMessage()], $e->getCode());
+        } catch (\Exception $e) {
+            return $this->responseError($e->getCode());
+        }
     }
 
     /**
