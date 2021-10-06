@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Repository;
+
 use Illuminate\Database\Eloquent\Model;
 
 /**
-* Interface EloquentRepositoryInterface
-* @package App\Repositories
-*/
+ * Interface EloquentRepositoryInterface
+ * @package App\Repositories
+ */
 interface EloquentRepositoryInterface
 {
    /**
@@ -27,4 +28,10 @@ interface EloquentRepositoryInterface
     * @return Model
     */
    public function update(array $attributes, $id): bool;
+
+   /**
+    * @param $id
+    * @return Model
+    */
+   public function delete($id): bool;
 }
