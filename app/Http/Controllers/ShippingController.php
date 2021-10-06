@@ -14,7 +14,7 @@ class ShippingController extends Controller
 
     public function __construct(ShippingService $service)
     {
-        $this->service = $service;   
+        $this->service = $service;
     }
     /**
      * Display a listing of the resource.
@@ -26,9 +26,8 @@ class ShippingController extends Controller
         try {
 
             $shippings = $this->service->getAll();
-    
-            return $this->response($shippings);
 
+            return $this->response($shippings);
         } catch (\Exception $e) {
             return $this->responseError($e->getCode());
         }
@@ -52,12 +51,10 @@ class ShippingController extends Controller
             }
 
             return $this->responseError(500, 'Ocorreu um erro ao tentar criar o frete.');
-
         } catch (\Exception $e) {
-            
+
             return $this->responseError($e->getCode(), $e->getMessage());
         }
-        
     }
 
     /**
@@ -90,7 +87,6 @@ class ShippingController extends Controller
             }
 
             return $this->responseError(500, 'Ocorreu um erro ao tentar criar o frete.');
-
         } catch (NotFound $e) {
             return $this->response(['message' => $e->getMessage()], $e->getCode());
         } catch (\Exception $e) {
@@ -106,6 +102,19 @@ class ShippingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+            $shipping = $this->service->delete($id);
+
+            if ($shipping) {
+                return $this->response('Registro excluído com sucesso', 200);
+            }
+
+            return $this->responseError(500, 'Ocorreu um erro ao tentar excluir o frete.');
+        } catch (NotFound $e) {
+            return $this->response(['message' => $e->getMessage()], $e->getCode());
+        } catch (\Exception $e) {
+            return $this->responseError($e->getCode());
+        }
     }
 }

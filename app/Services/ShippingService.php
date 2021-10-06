@@ -7,7 +7,8 @@ use App\Repository\ShippingRepositoryInterface;
 use Facade\FlareClient\Http\Exceptions\NotFound;
 use Illuminate\Support\Collection;
 
-class ShippingService {
+class ShippingService
+{
 
     protected $shippingRepository;
 
@@ -33,5 +34,15 @@ class ShippingService {
         }
 
         return $this->shippingRepository->update($attributes, $id);
+    }
+
+    public function delete($id)
+    {
+        $shipping = $this->shippingRepository->find($id);
+        if (!$shipping) {
+            throw new NotFound("Registro não encontrado", 404);
+        }
+
+        return $shipping->delete($id);
     }
 }
