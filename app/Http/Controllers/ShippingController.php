@@ -29,11 +29,7 @@ class ShippingController extends Controller
             return $this->response($shippings);
 
         } catch (\Exception $e) {
-            $data = [
-                'message' => 'An error occurred, please contact our support', 
-                'code' => $e->getCode() 
-            ];
-            return $this->response($data, 500);
+            return $this->responseError($e->getCode());
         }
     }
 
@@ -45,7 +41,22 @@ class ShippingController extends Controller
      */
     public function store(ShippingRequest $request)
     {
-        $inputs = $request->validated();
+        try {
+            $inputs = $request->validated();
+
+            $shipping = $this->service->create($inputs);
+
+            if ($shipping) {
+                return $this->response($shipping, 201);
+            }
+
+            return $this->responseError(500, 'Ocorreu um erro ao tentar criar o frete.');
+
+        } catch (\Exception $e) {
+            
+            return $this->responseError($e->getCode(), $e->getMessage());
+        }
+        
     }
 
     /**

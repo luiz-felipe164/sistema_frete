@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Shipping extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'board',
+        'vehicle_owner',
+        'amount',
+        'start_date',
+        'end_date',
+        'status'
+    ];
 }
