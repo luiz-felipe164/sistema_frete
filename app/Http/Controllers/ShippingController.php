@@ -27,7 +27,7 @@ class ShippingController extends Controller
 
             $shippings = $this->service->getAll();
 
-            return $this->response($shippings);
+            return $this->response('Todos os fretes', 200, $shippings);
         } catch (\Exception $e) {
             return $this->responseError($e->getCode());
         }
