@@ -27,7 +27,7 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "8080:8080"
+      - "8081:8081"
       - "443:443"
     volumes:
       - ./:/var/www
@@ -53,6 +53,17 @@ services:
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - app-network
+
+  app-vue:
+    container_name: vue_app
+    build:
+      context: ./front-vue
+      dockerfile: Dockerfile
+    volumes:
+      - './front-vue:/app'
+      - '/app/node_modules'
+    ports:
+      - '8080:8080'
 
 #Docker Networks
 networks:
