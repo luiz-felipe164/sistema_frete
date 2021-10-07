@@ -20,9 +20,9 @@ abstract class StatusEnum {
     public static function getPtBr(): array
     {
         return [
-            'Iniciado'    => self::STARTED,
-            'Em Trânsito' => self::IN_TRASIT,
-            'Completado'  => self::COMPLETED,
+            self::STARTED   => 'Iniciado',
+            self::IN_TRASIT => 'Em Trânsito',
+            self::COMPLETED => 'Completado',
         ];
     }
 }

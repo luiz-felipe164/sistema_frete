@@ -23,14 +23,14 @@ class ShippingController extends Controller
      */
     public function index(): JsonResponse
     {
-        try {
+        // try {
 
             $shippings = $this->service->getAll();
 
             return $this->response('Todos os fretes', 200, $shippings);
-        } catch (\Exception $e) {
-            return $this->responseError($e->getCode());
-        }
+        // } catch (\Exception $e) {
+        //     return $this->responseError($e->getCode());
+        // }
     }
 
     /**

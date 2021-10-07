@@ -17,4 +17,9 @@ class Shipping extends Model
         'end_date',
         'status'
     ];
+
+    protected $dates = [
+        'start_date',
+        'end_date'
+    ];
 }
