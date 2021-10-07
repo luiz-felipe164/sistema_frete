@@ -117,4 +117,26 @@ class ShippingController extends Controller
             return $this->responseError($e->getCode());
         }
     }
+
+    public function search(Request $request)
+    {
+        try {
+
+            $term = $request->get('term');
+            if (!$term) {
+                return $this->response('É necessário enviar um termo para pesquisa', 422);
+            }
+
+            $shippings = $this->service->search($term);
+
+            if ($shippings->count() === 0) {
+                return $this->response('Não foram encontrados registros', 404);
+            }
+
+            return $this->response('Registros encontrados', 200, $shippings);
+
+        } catch (\Exception $e) {
+            return $this->responseError($e->getCode());
+        }
+    }
 }

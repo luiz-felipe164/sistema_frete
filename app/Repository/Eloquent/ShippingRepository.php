@@ -26,4 +26,15 @@ class ShippingRepository extends BaseRepository implements ShippingRepositoryInt
     {
         return $this->model->all();
     }
+
+    /**
+     * @return Collection
+     */
+    public function search($term): Collection
+    {
+        return $this->model
+            ->where('board', 'like', "%{$term}%")
+            ->orWhere('vehicle_owner', 'like', "%{$term}%")
+            ->get();
+    }
 }

@@ -45,4 +45,9 @@ class ShippingService
 
         return $shipping->delete($id);
     }
+
+    public function search($term): Collection
+    {
+        return $this->shippingRepository->search($term);
+    }
 }

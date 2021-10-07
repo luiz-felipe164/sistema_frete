@@ -19,4 +19,5 @@ Route::post('/login', LoginController::class)->name('login');
 
 Route::middleware('auth:sanctum')->group(function() {
     Route::resource('shipping', ShippingController::class)->except(['create', 'edit']);
+    Route::get('/search/shipping', [ShippingController::class, 'search']);
 });
