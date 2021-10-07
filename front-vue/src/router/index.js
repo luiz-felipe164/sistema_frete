@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/fretes',
+    path: '/',
     name: 'Fretes',
     component: Fretes,
     beforeEnter: Guard.auth
