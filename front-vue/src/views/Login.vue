@@ -40,9 +40,8 @@
                     value="log in"
                     >Login</v-btn
                   >
-                  <v-alert v-if="alert" border="top" color="red lighten-2" dark>
-                    I'm an alert with a top border and red color
-                  </v-alert>
+                  <br>
+                  <Alert v-if="error.alert" :message="error.message"/>
                 </form>
               </v-card-text>
             </v-card>
@@ -55,28 +54,40 @@
 
 <script>
 import { login } from "../services/api";
+import Alert from '../components/Alert.vue';
 
 export default {
+  components: { Alert },
   name: "Login",
   data() {
     return {
       email: "",
       password: "",
       loading: false,
-      alert: false,
+      error: {
+        message: '',
+        alert: false
+      },
     };
   },
   methods: {
     async login() {
       this.loading = true;
+      this.error.alert = false
+      
       const response = await login(this.email, this.password);
       this.loading = false;
 
       if (response.status === 401) {
-        this.setAlert();
+        this.error.message = 'Usuário ou Senha Invalidos'
+        this.error.alert = true;
+        return;
       }
+
+      console.log(response)
+      localStorage.setItem('_token_frete', response.access_token)
+      this.$router.replace('fretes')
     },
-    setAlert(color, message) {},
   },
 };
 </script>

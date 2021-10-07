@@ -2,15 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Guard from '../services/middleware'
 import Login from '../views/Login.vue'
-import Home from '../views/Home.vue'
+import Fretes from '../views/Fretes.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/home',
-    name: 'Home',
-    component: Home,
+    path: '/fretes',
+    name: 'Fretes',
+    component: Fretes,
     beforeEnter: Guard.auth
   },
   {
